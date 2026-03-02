@@ -1,36 +1,20 @@
-# define the English alphabet
-alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-from utils import alphabet, process_plaintext
-
-# if plaintext is all lowercase, convert to uppercase
-# Remove all non-alphabet characters from the plaintext
-# return processed plaintext
-def process_plaintext(plaintext):
-    processed = ""
-    plaintext = plaintext.upper()
-
-    for char in plaintext:
-        if char in alphabet:
-            processed += char
-
-    return processed
+from utils import alphabet
 
 
 def encrypt_caesar(plaintext, shift):
-    ciphertext = ""
-    processed_plaintext = process_plaintext(plaintext)
-
     # create an empty list that contains the mappings from the alphabet to its corresponding number
     encrypted_text = []
-
-    for val in processed_plaintext:
-        num = alphabet.index(val)
-        num = num  + shift
-        encrypted_num = num % 26
-        encrypted_val = alphabet[encrypted_num]
-        encrypted_text.append(encrypted_val)
-    result = "".join(encrypted_text)    
-    return result   
+    for char in plaintext:
+        # check to see if char is an alphabet character
+        if char.isalpha():
+            # check case of char
+            charUpper = char.isupper()
+            indexChar = alphabet.index(char.upper())
+            shiftedText = alphabet[(indexChar + shift) % 26]
+            encrypted_text.append(shiftedText if charUpper else shiftedText.lower())
+        else:
+            encrypted_text.append(char) # keep everything that isnt the alphabet    
+    return "".join(encrypted_text)   
 
     
 
