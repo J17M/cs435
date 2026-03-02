@@ -1,5 +1,6 @@
 # define the English alphabet
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+from utils import alphabet, process_plaintext
 
 # if plaintext is all lowercase, convert to uppercase
 # Remove all non-alphabet characters from the plaintext
@@ -24,7 +25,7 @@ def encrypt_caesar(plaintext, shift):
 
     for val in processed_plaintext:
         num = alphabet.index(val)
-        num = num  + int(shift)
+        num = num  + shift
         encrypted_num = num % 26
         encrypted_val = alphabet[encrypted_num]
         encrypted_text.append(encrypted_val)
@@ -35,7 +36,16 @@ def encrypt_caesar(plaintext, shift):
 
 if __name__ == "__main__":
     user_plaintext = input("Input your plaintext: ")
-    user_shift = input("Input your key (shift): ")
+
+    # While loop to ensure proper input validation, catch errors when trying to conver to int
+    while True:
+        user_shift = input("Input your key (shift): ")
+        try:
+            user_shift = int(user_shift)
+            break # if valid, exit loop
+        except ValueError:
+            print("Input is not an integer, try again\n")
+
     print(encrypt_caesar(user_plaintext, user_shift))
     
     
